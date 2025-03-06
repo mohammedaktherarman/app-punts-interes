@@ -1,31 +1,46 @@
-// define the map starting position
-const mapCenter = [41.3851, 2.1734]; 
+const mapa = new Mapa();
 
-// zoom
-const zoomLevel = 13; 
+const dropZoneObj = document.querySelector(".dropZone");
 
+let fitxer = [];
 
-// renderiza el mapa
-let map = L.map('map').setView(mapCenter, zoomLevel); 
-let tileLayer = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { attribution: '&copy; OpenStreetMap contributors' }); tileLayer.addTo(map); 
+dropZoneObj.addEventListener("dragover", function(event){
+    event.preventDefault();
+    console.log("dragover")
+});
 
+dropZoneObj.addEventListener("drop", function(event){
+    event.preventDefault();
+    console.log("drop")
+    const files =event.dataTransfer.files;
+    loadFile(files)
+});
 
-// define the marker position 
-let markerPosition = [41.3870, 2.1699]; 
+const loadFile= function(files){
+    if(files && files.length>0){
+        const file = files[0];
+        const extensio = file.name.split(".")[1];
+        if(extensio.toLowerCase() === "csv"){
+            console.log("El fitxer es csv")
+            readCsv(file)
+        }else{
+            console.log("El fitxer no és correcte")
+        }
+        console.log(file)
+    }
+}
 
-let markerPosition2 = [41.3860, 2.1690];
+const readCsv = function(file){
+    const reader = new FileReader();
+    reader.onload = () => {
+        fitxer = reader.result.trim().split("\n").slice(1);
+        console.log(fitxer);
+    }
+    reader.onerror = () => {
+        showMessage("error")
+    }
+    reader.readAsText(file, "UTF-8")
+}
 
-
-// Create a marker and add it to the map 
-let marker = L.marker(markerPosition).addTo(map); 
-
-let marker2 = L.marker(markerPosition2).addTo(map); 
-
-
-// add a popup to the marker
-let popupText = "This is a marker in Barcelona!"; 
-marker.bindPopup(popupText).openPopup(); 
-
-let popupText2 = '<h1>hola</h1>'; 
-marker2.bindPopup(popupText2).openPopup();  
+const map = new Mapa();
 
