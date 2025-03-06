@@ -34,6 +34,7 @@ const readCsv = function(file){
     const reader = new FileReader();
     reader.onload = () => {
         fitxer = reader.result.trim().split("\n").slice(1);
+        loadData(fitxer)
         console.log(fitxer);
     }
     reader.onerror = () => {
@@ -42,5 +43,30 @@ const readCsv = function(file){
     reader.readAsText(file, "UTF-8")
 }
 
-const map = new Mapa();
+const loadData = function (fitxer){
+    // itera cada linia del fitxer
+    fitxer.forEach((linia) => {
+        const dades = linia.split(";")
+        switch(dades[TIPUS].toLowerCase()){
+            case "espai":
+                console.log("instancia objecte PuntInteres");
+                const espaiObj = new PuntInteres(dades[PAIS], dades[CODI]);
+                puntInteres.push(espaiObj);
+                break;
+            case "museu":
+                console.log("instancia objecte Museu");
+                const museuObj = new Museu(dades[PAIS], dades[CODI]);
+                puntInteres.push(museuObj);
+                break;
+            case "atraccio":
+                console.log("instancia objecte Atraccio");
+                const atraccioObj = new Atraccio(dades[PAIS], dades[CODI]);
+                puntInteres.push(atraccioObj);
+                break;
+            default:
+                throw new Error("Has afegit un tipus que no és correcte");
+        }
+        console.log(dades[NOM]);
+    });
+}
 
