@@ -1,7 +1,7 @@
 class PuntInteres {
     
     #id;
-    #esManual;
+    #esManual = false;
 
     constructor(id, esManual, pais, ciutat, nom, direccio, tipus, latitud, longitud, puntuacio) {
         this.#id = id;
@@ -36,3 +36,5 @@ class PuntInteres {
 
     }
 }
+
+export { PuntInteres };

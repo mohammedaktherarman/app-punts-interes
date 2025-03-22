@@ -9,6 +9,62 @@
 .dropZone {
     border: 1px dashed; 
     left: 0;
-    width: 35vw;
+    width: 38vw;
     height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;  
+}
+
+#nameFilter {
+    width: 37vw;
+}
+
+.contenedor {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;  
+    left: 0;
+    width: 38vw;
+}
+
+.contenedor2 {
+    display: flex;
+    justify-content: space-around;  
+    align-items: center;  
+    left: 0;
+    width: 38vw;
+}
+
+.contenedor3 {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;  
+    left: 0;
+    width: 38vw;
+}
+
+select {
+    width: 100%;
+    max-width: 200px; 
+    margin-bottom: 10px;
+}
+
+.llista {
+    display: flex;
+    align-items: center;
+    justify-content: center;  
+    border: 1px solid black; 
+    width: 38vw;
+    margin-top: 10px;
+    left: 0;
+}
+
+#informacioPais {
+    background-color: rgb(204, 204, 204);
+    width: 40vw;
+    position: absolute;
+    top: 0;
+    left: 0;
+    padding-left: 10px;
 }

@@ -1,27 +1,63 @@
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link rel="stylesheet" href="/style/styles.css">
+    
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" 
+    integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
 
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
-    integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
-    crossorigin=""/>
-
-    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
-    integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
-    crossorigin=""></script>
-
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" 
+    integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
 </head>
 <body>
+
+    <div id="informacioPais" hidden>
+        <!--  -->
+    </div>
+
+    <div class="filtros">
+        <div class="contenedor2">
+            <p>Tipus:</p>
+            <p>Ordenació:</p>
+        </div>
+
+        <div class="contenedor">
+            <select id="type">
+                <!--  -->
+            </select>
+            <select id="order">
+                <option value="Ascendent">Ascendent</option>
+                <option value="Descendent">Descendent</option>
+            </select>
+        </div>
+
+        <input type="text" id="nameFilter" placeholder="Filtrar per nom...">
+    </div>
+    
+    <div class="llista">
+        <p>No hi ha informacio per mostrar</p>
+    </div>
+
+    <div class="contenedor3">    
+        <div id="totalItems"></div>
+        <button id="borrartot">Netejar tot</button>
+    </div>
+    
+
+    <div class="dropZone">
+        <p>Arrossega un fitxer CSV aqui per carrega la informacio</p>
+    </div>
+
     <div id="map"></div>
-    <div class="dropZone">Arrastra el CSV</div>
-    <script src="/script/mapa.js"></script>
-    <script src="/script/atraccio.js"></script>
-    <script src="/script/museu.js"></script>
-    <script src="/script/puntinteres.js"></script>
-    <script src="/script/const.js"></script>
-    <script src="/script/app.js"></script>
+
+    <script type="module" src="/script/mapa.js"></script>
+    <script type="module" src="/script/atraccio.js"></script>
+    <script type="module" src="/script/museu.js"></script>
+    <script type="module" src="/script/puntinteres.js"></script>
+    <script type="module" src="/script/const.js"></script>
+    <script type="module" src="/script/app.js"></script>
 </body>
 </html>

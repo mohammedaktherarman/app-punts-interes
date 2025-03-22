@@ -1,3 +1,5 @@
+import { PuntInteres } from "./puntinteres.js";
+
 class Atraccio extends PuntInteres {
     constructor(id, esManual, pais, ciutat, nom, direccio, tipus, latitud, longitud, puntuacio, horaris, preu, moneda) {
         super(id, esManual, pais, ciutat, nom, direccio, tipus, latitud, longitud, puntuacio);
@@ -10,3 +12,5 @@ class Atraccio extends PuntInteres {
         
     }
 }
+
+export { Atraccio };

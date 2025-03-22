@@ -1,6 +1,7 @@
 class Mapa {
 
     #map;
+    #marcadores = [];
 
     constructor() {
 
@@ -20,15 +21,28 @@ class Mapa {
     }
 
     actualizarPosInitMapa(lat, lon) {
-        
+        const mapCenter = [lat, lon];
+        const zoomLevel = 6; 
+
+        this.#map.setView(mapCenter, zoomLevel);
     }
 
-    mostrarPunt() {
-       
+    mostrarPunt(lat, lon, desc = "") {
+        const marcador = L.marker([lat, lon]).addTo(this.#map);
+
+        if (desc) {
+            marcador.bindPopup(desc);
+        }
+
+        this.#marcadores.push(marcador);
     }
 
     borrarPunt() {
-       
+        this.#marcadores.forEach((marcador) => {
+            this.#map.removeLayer(marcador);
+        });
+
+        this.#marcadores = [];
     }
 
     #getPosicioActual() {
@@ -58,6 +72,8 @@ class Mapa {
     }
 
 }
+
+export { Mapa };
 
 
 // APUNTS
