@@ -16,10 +16,6 @@ class Mapa {
         this.#getPosicioActual();
     }
 
-    mostrarPuntInicial() {
-        
-    }
-
     actualizarPosInitMapa(lat, lon) {
         const mapCenter = [lat, lon];
         const zoomLevel = 6; 
@@ -34,7 +30,23 @@ class Mapa {
             marcador.bindPopup(desc);
         }
 
-        this.#marcadores.push(marcador);
+        this.#marcadores.push({
+            lat: lat,
+            lon: lon,
+            marcador: marcador
+        });
+    }
+
+    borrarMarcador(lat, lon) {
+        const index = this.#marcadores.findIndex(m => m.lat === lat && m.lon === lon);
+
+        if (index !== -1) {
+          
+            this.#map.removeLayer(this.#marcadores[index].marcador);
+
+          
+            this.#marcadores.splice(index, 1);
+        }
     }
 
     borrarPunt() {

@@ -4,20 +4,23 @@ import { Atraccio } from "./atraccio.js";
 import { Mapa } from "./mapa.js";
 import { PAIS, CODI, CIUTAT, TIPUS, NOM, DIRECCIO, LATITUD, LONGITUD, HORARIS, PREU, DESCRIPCIO, PUNTUACIO, MONEDA } from "./const.js";
 
+// mapa
+const mapa = new Mapa();
+
 let puntInteres = [];
 
 let idPuntInteres = 0;
 let idMuseu = 0;
 let idAtraccio  = 0;
+
 let esManual = false;
 
 let codiPais;
 
 let ciutat;
 
+// menu desplegable Tipus
 let set = new Set();
-
-const mapa = new Mapa();
 
 const dropZoneObj = document.querySelector(".dropZone");
 
@@ -62,13 +65,19 @@ const readCsv = function(file){
     reader.readAsText(file, "UTF-8")
 }
 
+
 const loadData = function (fitxer){
     // itera cada linia del fitxer
     fitxer.forEach((linia) => {
         const dades = linia.split(";")
+
+        // menu desplegable Tipus
         set.add(dades[TIPUS]);
+
+        // carregar informació del país
         codiPais = dades[CODI];
         ciutat = dades[CIUTAT];
+
         switch(dades[TIPUS].toLowerCase()){
             case "espai":
                 console.log("instancia objecte PuntInteres creat");
@@ -91,14 +100,18 @@ const loadData = function (fitxer){
             default:
                 throw new Error("Has afegit un tipus que no és correcte");
         }
-        console.log(dades[NOM]);
     });
-    console.log("Lista", puntInteres);
+
+    // menu desplegable Tipus
     filtreTipus();
+
+    // carregar informació del país
     informacioPais(codiPais, ciutat);
+
     renderitzarLlista(puntInteres)
 }
 
+// menu desplegable Tipus
 const filtreTipus = function() {
     const select = document.getElementById("type");
     const option = document.createElement("option");
@@ -114,129 +127,7 @@ const filtreTipus = function() {
     });
 };
 
-
-let puntInteresPintat = [];
-
-const pintarEspai = function(obj) {
-    const pi = document.createElement("div");
-    pi.classList.add("punt");
-    pi.style.backgroundColor = "#7FFFD4";  
-    pi.id = obj.id;  
-
-    const nombre = document.createElement("h3");
-    nombre.textContent = obj.nom; 
-    pi.appendChild(nombre);
-
-    const descripcion = document.createElement("p");
-    descripcion.textContent = `${obj.ciutat} | Tipus: Espai`;
-    pi.appendChild(descripcion);
-
-    const eliminarButton = document.createElement("button");
-    eliminarButton.textContent = "Eliminar";
-    eliminarButton.id = obj.id;
-
-    eliminarButton.addEventListener("click", () => eliminarPunt(obj.id));
-
-    pi.appendChild(eliminarButton); 
-    document.querySelector(".llista").appendChild(pi);
-    puntInteresPintat.push(obj); 
-};
-
-const pintarMuseu = function(obj) {
-    const pi = document.createElement("div");
-    pi.classList.add("punt");
-    pi.style.backgroundColor = "#FFD37F"; 
-    pi.id = obj.id; 
-
-    const nombre = document.createElement("h3");
-    nombre.textContent = obj.nom; 
-    pi.appendChild(nombre);
-
-    const descripcion = document.createElement("p");
-    descripcion.textContent = `${obj.ciutat} | Tipus: Museu | Horaris: ${obj.horaris} | Preu: ${obj.preu}`;
-    pi.appendChild(descripcion);
-
-    const eliminarButton = document.createElement("button");
-    eliminarButton.textContent = "Eliminar";
-    eliminarButton.id = obj.id;
-
-    eliminarButton.addEventListener("click", () => eliminarPunt(obj.id));
-
-    pi.appendChild(eliminarButton); 
-    document.querySelector(".llista").appendChild(pi); 
-    puntInteresPintat.push(obj); 
-};
-
-const pintarAtraccio = function(obj) {
-    const pi = document.createElement("div");
-    pi.classList.add("punt");
-    pi.style.backgroundColor = "#E1FF7F"; 
-    pi.id = obj.id; 
-
-    const nombre = document.createElement("h3");
-    nombre.textContent = obj.nom; 
-    pi.appendChild(nombre);
-
-    const descripcion = document.createElement("p");
-    descripcion.textContent = `${obj.ciutat} | Tipus: Atraccio`;
-    pi.appendChild(descripcion);
-
-    const eliminarButton = document.createElement("button");
-    eliminarButton.textContent = "Eliminar";
-    eliminarButton.id = obj.id;
-
-    eliminarButton.addEventListener("click", () => eliminarPunt(obj.id));
-
-    pi.appendChild(eliminarButton); 
-    document.querySelector(".llista").appendChild(pi); 
-    puntInteresPintat.push(obj);
-};
-
-const eliminarPunt = function(id) {
-    
-    const puntDiv = document.getElementById(id);
-
-    if (puntDiv) {
-        puntDiv.remove();
-    }
-
-    puntInteres = puntInteres.filter(punt => punt.id !== id);
-    puntInteresPintat = puntInteresPintat.filter(punt => punt.id !== id);
-
-    const totalItems = document.getElementById("totalItems");
-    totalItems.textContent = `Número total: ${puntInteresPintat.length}`;
-};
-
-const renderitzarLlista = function(puntInteres) {
-    const llistaDiv = document.querySelector(".llista");
-
-    puntInteresPintat = [];
-
-    puntInteres.forEach((item) => {
-        switch (item.tipus.toLowerCase()) {
-            case "espai":
-                pintarEspai(item);
-                break;
-            case "museu":
-                pintarMuseu(item);
-                break;
-            case "atraccio":
-                pintarAtraccio(item);
-                break;
-            default:
-                alert("Has afegit un tipus que no és correcte.");
-        }
-    });
-
-    const pem = document.getElementById("pem");
-    if (puntInteresPintat.length > 0) {
-        pem.style.display = "none";
-    }
-
-    const totalItems = document.getElementById("totalItems");
-    totalItems.textContent = `Número total: ${puntInteresPintat.length}`;
-};
-
+// carregar informació del país
 const informacioPais = function(codiPais, ciutat) {
     const url = "https://restcountries.com/v3.1/alpha/" + codiPais
     fetch(url)
@@ -263,3 +154,178 @@ const informacioPais = function(codiPais, ciutat) {
         console.error('error', error);
     });
 }
+
+let puntInteresPintat = [];
+let contador = 0;
+
+const actualizarContador = function () {
+    let totalItems = document.getElementById("totalItems");
+    let div = document.querySelector(".contenedor3");
+
+    if (!totalItems) {
+        totalItems = document.createElement("div");
+        totalItems.id = "totalItems";
+        div.appendChild(totalItems); 
+    }
+
+    totalItems.textContent = `Numero total: ${contador}`;
+
+    if (contador === 0) {
+        document.getElementById("frase").style.display = "block";
+    } else {
+        document.getElementById("frase").style.display = "none";
+    }
+};
+
+const eliminarPunt = function(lat, lon, div) {
+    if (confirm("Estàs segur que vols eliminar el punt d’interès?")) {
+        div.remove();
+        contador--;
+
+        mapa.borrarMarcador(lat, lon);
+
+        actualizarContador();
+
+        if (contador === 0) {
+            document.getElementById("frase").style.display = "block";
+        }
+    }
+};
+
+const existeix = function(lat, lon) {
+    for (let i = 0; i < puntInteresPintat.length; i++) {
+        if (puntInteresPintat[i].latitud === lat && puntInteresPintat[i].longitud === lon) {
+            return true; 
+        }
+    }
+    return false;
+};
+
+
+
+const pintarEspai = function (obj) {
+
+    if (existeix(obj.latitud, obj.longitud)) {
+        return;
+    }
+
+    const div = document.createElement("div");
+    div.classList.add("punt");
+    div.style.backgroundColor = "#7FFFD4";
+
+    const nombre = document.createElement("h3");
+    nombre.textContent = obj.nom;
+    div.appendChild(nombre);
+
+    const descripcion = document.createElement("p");
+    descripcion.textContent = `${obj.ciutat} | Tipus: Espai`;
+    div.appendChild(descripcion);
+
+    const eliminarButton = document.createElement("button");
+    eliminarButton.textContent = "Eliminar";
+    eliminarButton.addEventListener("click", function() {
+        eliminarPunt(obj.latitud, obj.longitud, div);
+    });
+
+    div.appendChild(eliminarButton);
+    document.querySelector(".llista").appendChild(div);
+    
+    puntInteresPintat.push(obj);
+    contador++;
+
+    actualizarContador();
+
+    mapa.mostrarPunt(obj.latitud, obj.longitud, `<h3>${obj.nom}</h3><p>${obj.direccio}</p><p>Puntuació: ${obj.puntuacio}</p>`);
+};
+
+const pintarMuseu = function (obj) {
+
+    if (existeix(obj.latitud, obj.longitud)) {
+        return;
+    }
+
+    const div = document.createElement("div");
+    div.classList.add("punt");
+    div.style.backgroundColor = "#FFD37F";
+
+    const nombre = document.createElement("h3");
+    nombre.textContent = obj.nom;
+    div.appendChild(nombre);
+
+    const descripcion = document.createElement("p");
+    descripcion.textContent = `${obj.ciutat} | Tipus: Museu | Horaris: ${obj.horaris} | Preu: ${obj.preu}`;
+    div.appendChild(descripcion);
+
+    const eliminarButton = document.createElement("button");
+    eliminarButton.textContent = "Eliminar";
+    eliminarButton.addEventListener("click", function() {
+        eliminarPunt(obj.latitud, obj.longitud, div);
+    });
+
+    div.appendChild(eliminarButton);
+    document.querySelector(".llista").appendChild(div);
+    
+    puntInteresPintat.push(obj);
+    contador++;
+
+    actualizarContador();
+
+    mapa.mostrarPunt(obj.latitud, obj.longitud, `<h3>${obj.nom}</h3><p>${obj.direccio}</p><p>Puntuació: ${obj.puntuacio}</p>`);
+};
+
+const pintarAtraccio = function (obj) {
+
+    if (existeix(obj.latitud, obj.longitud)) {
+        return;
+    }
+
+    const div = document.createElement("div");
+    div.classList.add("punt");
+    div.style.backgroundColor = "#E1FF7F";
+
+    const nombre = document.createElement("h3");
+    nombre.textContent = obj.nom;
+    div.appendChild(nombre);
+
+    const descripcion = document.createElement("p");
+    descripcion.textContent = `${obj.ciutat} | Tipus: Atraccio`;
+    div.appendChild(descripcion);
+
+    const eliminarButton = document.createElement("button");
+    eliminarButton.textContent = "Eliminar";
+    eliminarButton.addEventListener("click", function() {
+        eliminarPunt(obj.latitud, obj.longitud, div);
+    });
+    
+
+    div.appendChild(eliminarButton);
+    document.querySelector(".llista").appendChild(div);
+    
+    puntInteresPintat.push(obj);
+    contador++;
+
+    actualizarContador();
+
+    mapa.mostrarPunt(obj.latitud, obj.longitud, `<h3>${obj.nom}</h3><p>${obj.direccio}</p><p>Puntuació: ${obj.puntuacio}</p>`);
+};
+
+const renderitzarLlista = function (puntInteres) {
+
+    document.getElementById("frase").style.display = "none";
+
+    puntInteres.forEach((item) => {
+        switch (item.tipus.toLowerCase()) {
+            case "espai":
+                pintarEspai(item);
+                break;
+            case "museu":
+                pintarMuseu(item);
+                break;
+            case "atraccio":
+                pintarAtraccio(item);
+                break;
+            default:
+                alert("Has afegit un tipus que no és correcte.");
+        }
+    });
+};
