@@ -2,6 +2,7 @@ class PuntInteres {
     
     #id;
     #esManual = false;
+    static totalTasques = 0;
 
     constructor(id, esManual, pais, ciutat, nom, direccio, tipus, latitud, longitud, puntuacio) {
         this.#id = id;
@@ -33,7 +34,7 @@ class PuntInteres {
     }
 
     static obtenirTotalElements() {
-
+        return PuntInteres.totalTasques;
     }
 }
 
