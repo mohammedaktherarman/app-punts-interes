@@ -139,16 +139,21 @@ const informacioPais = function(codiPais, ciutat) {
     })
     .then(data => {
         const div = document.getElementById("informacioPais")
-        div.hidden = false;
-        const p = document.createElement("p")
-        p.textContent = `Pais (${data[0].flag}) ${ciutat}`;
-        div.appendChild(p);
-        console.log(data);
+        if (div.hidden === true) {
+            const div = document.getElementById("informacioPais")
+            div.hidden = false;
+            const p = document.createElement("p")
+            p.textContent = `Pais (${data[0].flag}) ${ciutat}`;
+            div.appendChild(p);
+            console.log(data);
 
-        const lat = data[0].latlng[0];
-        const lon = data[0].latlng[1]; 
+            const lat = data[0].latlng[0];
+            const lon = data[0].latlng[1]; 
 
-        mapa.actualizarPosInitMapa(lat, lon)
+            mapa.actualizarPosInitMapa(lat, lon)
+        } else {
+            console.log("ja esta creat")
+        }
     })
     .catch(error => {
         console.error('error', error);
@@ -201,8 +206,6 @@ const existeix = function(lat, lon) {
     return false;
 };
 
-
-
 const pintarEspai = function (obj) {
 
     if (existeix(obj.latitud, obj.longitud)) {
@@ -211,6 +214,7 @@ const pintarEspai = function (obj) {
 
     const div = document.createElement("div");
     div.classList.add("punt");
+    div.classList.add("espai");
     div.style.backgroundColor = "#7FFFD4";
 
     const nombre = document.createElement("h3");
@@ -246,6 +250,7 @@ const pintarMuseu = function (obj) {
 
     const div = document.createElement("div");
     div.classList.add("punt");
+    div.classList.add("museu");
     div.style.backgroundColor = "#FFD37F";
 
     const nombre = document.createElement("h3");
@@ -281,6 +286,7 @@ const pintarAtraccio = function (obj) {
 
     const div = document.createElement("div");
     div.classList.add("punt");
+    div.classList.add("atraccio");
     div.style.backgroundColor = "#E1FF7F";
 
     const nombre = document.createElement("h3");

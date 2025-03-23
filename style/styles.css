@@ -9,7 +9,7 @@
 .dropZone {
     border: 1px dashed; 
     width: 38%;
-    height: 50px;
+    height: 3vw;
     display: flex;
     align-items: center;
     justify-content: center;  
@@ -20,9 +20,6 @@
     padding: 5px;
 }
 
-.contenedor2{
-    padding: 5px;
-}
 
 .filtros .contenedor, .filtros .contenedor2, .filtros .contenedor3 {
     display: flex;
@@ -51,15 +48,6 @@ select {
     border: 1px solid black; 
     width: 38%;
     margin-top: 10px;
-}
-
-#informacioPais {
-    background-color: rgb(204, 204, 204);
-    width: 40%;
-    position: absolute;
-    top: 0;
-    left: 0;
-    padding-left: 10px;
 }
 
 .llista {
@@ -114,3 +102,17 @@ select {
 #totalItems {
     font-weight: bold;
 }
+
+#informacioPais {
+    background-color: #C0C3C3;
+    width: 38%;
+    padding: 1px;
+    padding-left: 10px;
+}
+
+#type, #order {
+    width: 90%;
+    padding: 1px;      
+}
+
+
