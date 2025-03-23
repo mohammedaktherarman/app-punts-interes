@@ -335,3 +335,14 @@ const renderitzarLlista = function (puntInteres) {
         }
     });
 };
+
+const borrarTot = document.getElementById("borrartot");
+
+borrarTot.addEventListener("click", function() {
+    document.querySelector(".llista").innerHTML = '';
+
+    mapa.borrarPunt();
+
+    contador = 0;
+    actualizarContador();
+});

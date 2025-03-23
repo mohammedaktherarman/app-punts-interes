@@ -50,12 +50,14 @@ class Mapa {
     }
 
     borrarPunt() {
-        this.#marcadores.forEach((marcador) => {
-            this.#map.removeLayer(marcador);
+        this.#marcadores.forEach((marcadorObj) => {
+            this.#map.removeLayer(marcadorObj.marcador);
         });
-
+    
         this.#marcadores = [];
     }
+    
+    
 
     #getPosicioActual() {
  
